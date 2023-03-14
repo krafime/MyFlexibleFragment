@@ -1,5 +1,6 @@
 package com.dicoding.myflexiblefragment
 
+import android.graphics.Path.Op
 import android.os.Bundle
 import android.security.identity.AccessControlProfile
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 
 class DetailCategoryFragment : Fragment() {
     private lateinit var tvCategoryName: TextView
@@ -45,6 +47,19 @@ class DetailCategoryFragment : Fragment() {
             val categoryName = arguments?.getString(EXTRA_NAME)
             tvCategoryName.text = categoryName
             tvCategoryDescription.text = description
+        }
+
+        btnShowDialog.setOnClickListener {
+            val optionDialogFragment = OptionDialogFragment()
+
+            val fragmentManager = childFragmentManager
+            optionDialogFragment.show(fragmentManager, OptionDialogFragment::class.java.simpleName)
+        }
+    }
+
+    internal var optionDialogListener: OptionDialogFragment.OnOptionDialogListener = object : OptionDialogFragment.OnOptionDialogListener {
+        override fun onOptionChosen(text: String?) {
+            Toast.makeText(requireActivity(), text, Toast.LENGTH_SHORT).show()
         }
     }
 }
